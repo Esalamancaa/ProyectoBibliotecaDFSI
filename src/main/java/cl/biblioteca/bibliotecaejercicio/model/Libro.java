@@ -18,15 +18,4 @@ public class Libro {
     private int fechaPublicacion;
     private String autor;
 
-    
-
-    public Libro(String autor, String editorial, int fechaPublicacion, int id, String isbn, String titulo) {
-        this.autor = autor;
-        this.editorial = editorial;
-        this.fechaPublicacion = fechaPublicacion;
-        this.id = id;
-        this.isbn = isbn;
-        this.titulo = titulo;
-    }
-
 }

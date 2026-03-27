@@ -33,5 +33,13 @@ public class LibroService {
         libroRepository.eliminar(id);
         return "producto eliminado";
     }
+
+    public int totalLibros(){
+        return libroRepository.totalLibros();
+    }
+
+    public Libro getLibroIsbn(String isbn){
+        return libroRepository.buscarPorIsbn(isbn);
+    }
 }
 

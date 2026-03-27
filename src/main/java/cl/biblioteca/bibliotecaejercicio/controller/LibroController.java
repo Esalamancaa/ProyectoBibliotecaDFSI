@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import cl.biblioteca.bibliotecaejercicio.model.Libro;
 import cl.biblioteca.bibliotecaejercicio.service.LibroService;
 
+
+
+
 @RestController
 @RequestMapping("api/v1/libros")
 public class LibroController {
@@ -32,11 +35,11 @@ public class LibroController {
         return libroService.saveLibro(libro);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public Libro buscarLibro(@PathVariable int id){
         return libroService.getLibroId(id);
     }
-
+    
     @PutMapping("{id}")
     public Libro actualizarLibro(@PathVariable int id, @RequestBody Libro libro){
         return libroService.updateLibro(libro);
@@ -47,4 +50,14 @@ public class LibroController {
         return libroService.deleteLibro(id);
     }
 
+    @GetMapping("/totalLibros")
+    public int totalLibros() {
+        return libroService.totalLibros();
+    }
+
+    @GetMapping("/isbn/{isbn}")
+    public Libro buscarLibroV2(@PathVariable String isbn) {
+        return libroService.getLibroIsbn(isbn);
+    }
+    
 }
