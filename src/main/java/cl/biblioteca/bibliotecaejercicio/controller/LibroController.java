@@ -2,6 +2,7 @@ package cl.biblioteca.bibliotecaejercicio.controller;
 
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,7 +40,7 @@ public class LibroController {
         return ResponseEntity.ok(libros);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Libro> buscarLibro(@PathVariable int id){
         Libro libro = libroService.getLibroId(id);
 
@@ -49,12 +50,9 @@ public class LibroController {
         return ResponseEntity.ok(libro);
     }
 
-    @GetMapping("{autor}")
-    public List<Libro> buscarLibroAutor(@RequestParam(name="autor", required=false) String autor){
-        if (autor != null && !autor.isEmpty()){
-            return libroService.getLibroAutor(autor);
-        }
-        return libroService.getLibros();
+    @GetMapping("/autor/{autor}")
+    public List<Libro> listarLibroAutor(@PathVariable String autor){
+        return libroService.getLibroAutor(autor);
     }
 
     @PostMapping

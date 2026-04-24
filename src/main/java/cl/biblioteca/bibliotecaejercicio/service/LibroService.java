@@ -17,19 +17,19 @@ public class LibroService {
         return libroRepository.findAll();
     }
 
-    public Libro saveLibro(Libro libro) {
-        return libroRepository.save(libro);
+    public List<Libro> getLibroAutor(String autor) {
+        return libroRepository.findByAutor(autor);
     }
 
     public Libro getLibroId(int id) {
         return libroRepository.findById(id).orElse(null);
     }
 
-    public List<Libro> getLibroAutor(String autor) {
-        return libroRepository.findByAutor(autor);
+    public Libro updateLibro(Libro libro) {
+        return libroRepository.save(libro);
     }
 
-    public Libro updateLibro(Libro libro) {
+    public Libro saveLibro(Libro libro) {
         return libroRepository.save(libro);
     }
 

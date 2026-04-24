@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import cl.biblioteca.bibliotecaejercicio.model.Libro;
 
@@ -14,7 +16,9 @@ public interface LibroRepository extends JpaRepository<Libro, Integer>{
         return (int) this.count();
     }
 
-    List<Libro> findByAutor(String autor);
+    // Consulta nativa simple
+    @Query(value = "SELECT * FROM libros WHERE autor = :autor", nativeQuery = true)
+    List <Libro> findByAutor(@Param("autor") String autor);
 }
 
 
