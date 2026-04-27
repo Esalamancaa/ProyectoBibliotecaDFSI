@@ -2,7 +2,6 @@ package cl.biblioteca.bibliotecaejercicio.controller;
 
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,24 +13,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import cl.biblioteca.bibliotecaejercicio.dto.CreateLibroRequest;
 import cl.biblioteca.bibliotecaejercicio.dto.UpdateLibroRequest;
+import cl.biblioteca.bibliotecaejercicio.dto.PokemonResponse;
 import cl.biblioteca.bibliotecaejercicio.exception.ResourceNotFoundException;
 import cl.biblioteca.bibliotecaejercicio.mapper.LibroMapper;
 import cl.biblioteca.bibliotecaejercicio.model.Libro;
 import cl.biblioteca.bibliotecaejercicio.service.LibroService;
-import jakarta.validation.Valid;
 
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v3/libros")
 public class LibroController {
 
     private final LibroService libroService;
+    private final WebClient pokeApiWebClient;
 
-    public LibroController(LibroService libroService) {
-        this.libroService = libroService;
+
+    public LibroController(LibroService libroService, WebClient pokeApiWebClient) {
+            this.libroService = libroService;
+            this.pokeApiWebClient = pokeApiWebClient;
     }
     
     @GetMapping
@@ -79,5 +83,19 @@ public class LibroController {
         return ResponseEntity.ok(total);
     }
 
+    /* --------------------------------------------------API DE POKEMON-------------------------------------------------- */
+
+    @GetMapping("/pokeapi")
+        public ResponseEntity<PokemonResponse> consultarPokemon(
+                        @RequestParam(name = "nombre") String nombre) {
+ 
+ 
+                PokemonResponse pokemon = pokeApiWebClient.get()
+                                .uri("/pokemon-species/{nombre}", nombre) // Endpoint más simple
+                                .retrieve().bodyToMono(PokemonResponse.class).block();
+ 
+ 
+                return ResponseEntity.ok(pokemon);
+        }
     
 }
