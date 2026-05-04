@@ -2,6 +2,7 @@ package cl.biblioteca.bibliotecaejercicio.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import cl.biblioteca.bibliotecaejercicio.dto.CineResponse;
 import cl.biblioteca.bibliotecaejercicio.dto.CreateLibroRequest;
 import cl.biblioteca.bibliotecaejercicio.dto.UpdateLibroRequest;
 import cl.biblioteca.bibliotecaejercicio.dto.PokemonResponse;
@@ -31,11 +33,13 @@ public class LibroController {
 
     private final LibroService libroService;
     private final WebClient pokeApiWebClient;
+    private final WebClient cineApiWebClient;
 
-
-    public LibroController(LibroService libroService, WebClient pokeApiWebClient) {
+    public LibroController(LibroService libroService, 
+        @Qualifier("pokeApiWebClient")WebClient pokeApiWebClient, @Qualifier("cineApiWebClient") WebClient cineApiWebClient) {
             this.libroService = libroService;
             this.pokeApiWebClient = pokeApiWebClient;
+            this.cineApiWebClient = cineApiWebClient;
     }
     
     @GetMapping
@@ -98,4 +102,19 @@ public class LibroController {
                 return ResponseEntity.ok(pokemon);
         }
     
+
+    /* --------------------------------------------------API DE CINE-------------------------------------------------- */
+
+    @GetMapping("/cineapi")
+        public ResponseEntity<CineResponse> consultarPelicula(
+                        @RequestParam(name = "nombre") String nombrePelicula) {
+ 
+ 
+                CineResponse pokemon = pokeApiWebClient.get()
+                                .uri("/pelicula/{nombrePelicula}", nombrePelicula) 
+                                .retrieve().bodyToMono(CineResponse.class).block();
+ 
+ 
+                return ResponseEntity.ok(pokemon);
+        }
 }

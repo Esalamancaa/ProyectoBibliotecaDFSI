@@ -10,6 +10,11 @@ public class WebClientConfig {
  
     @Bean
     public WebClient pokeApiWebClient(WebClient.Builder builder) {
-        return builder.baseUrl("https://pokeapi.co/api/v2").build();
+        return builder.clone().baseUrl("https://pokeapi.co/api/v2").build();
+    }
+
+    @Bean
+    public WebClient cineApiWebClient(WebClient.Builder builder){
+        return builder.clone().baseUrl("http://localhost:8082/api/v1/cine").build();
     }
 }
