@@ -20,6 +20,7 @@ import cl.biblioteca.bibliotecaejercicio.dto.CineResponse;
 import cl.biblioteca.bibliotecaejercicio.dto.CreateLibroRequest;
 import cl.biblioteca.bibliotecaejercicio.dto.UpdateLibroRequest;
 import cl.biblioteca.bibliotecaejercicio.dto.PokemonResponse;
+import cl.biblioteca.bibliotecaejercicio.dto.LibroNoEncontrado;
 import cl.biblioteca.bibliotecaejercicio.exception.ResourceNotFoundException;
 import cl.biblioteca.bibliotecaejercicio.mapper.LibroMapper;
 import cl.biblioteca.bibliotecaejercicio.model.Libro;
@@ -49,13 +50,23 @@ public class LibroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Libro> buscarLibro(@PathVariable int id){
+    public ResponseEntity<?> buscarLibro(@PathVariable int id){
         Libro libro = libroService.getLibroId(id);
+        
+        /*----------------------------------- Versión 1 -----------------------------------*/
 
         if(libro==null){
             throw new ResourceNotFoundException("ID no corresponde a un libro");
         }
         return ResponseEntity.ok(libro);
+
+        /*----------------------------------- Versión 2 -----------------------------------*/
+
+        //if(libro==null){
+        //    LibroNoEncontrado libroNoEncontrado = new LibroNoEncontrado("Error 12", "Libro no encontrado");
+        //    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(libroNoEncontrado);
+        //}
+        //return ResponseEntity.ok(libro);
     }
 
     @GetMapping("/autor/{autor}")
@@ -69,13 +80,13 @@ public class LibroController {
         return ResponseEntity.status(HttpStatus.CREATED).body(libro2);
     }
     
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Libro> actualizarLibro(@PathVariable int id, @Valid @RequestBody UpdateLibroRequest request){
         Libro libroactualizar = libroService.updateLibro(LibroMapper.toModel(id,request));
         return ResponseEntity.ok(libroactualizar);
     }
     
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarLibro(@PathVariable int id){
         libroService.deleteLibro(id);
         return ResponseEntity.noContent().build();
@@ -110,11 +121,11 @@ public class LibroController {
                         @RequestParam(name = "nombre") String nombrePelicula) {
  
  
-                CineResponse pokemon = pokeApiWebClient.get()
+                CineResponse pelicula = cineApiWebClient.get()
                                 .uri("/pelicula/{nombrePelicula}", nombrePelicula) 
                                 .retrieve().bodyToMono(CineResponse.class).block();
  
  
-                return ResponseEntity.ok(pokemon);
+                return ResponseEntity.ok(pelicula);
         }
 }
