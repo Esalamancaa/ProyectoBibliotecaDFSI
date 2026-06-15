@@ -20,7 +20,6 @@ import cl.biblioteca.bibliotecaejercicio.dto.CineResponse;
 import cl.biblioteca.bibliotecaejercicio.dto.CreateLibroRequest;
 import cl.biblioteca.bibliotecaejercicio.dto.UpdateLibroRequest;
 import cl.biblioteca.bibliotecaejercicio.dto.PokemonResponse;
-import cl.biblioteca.bibliotecaejercicio.dto.LibroNoEncontrado;
 import cl.biblioteca.bibliotecaejercicio.exception.ResourceNotFoundException;
 import cl.biblioteca.bibliotecaejercicio.mapper.LibroMapper;
 import cl.biblioteca.bibliotecaejercicio.model.Libro;
