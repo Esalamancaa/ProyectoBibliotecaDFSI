@@ -28,7 +28,7 @@ import cl.biblioteca.bibliotecaejercicio.service.LibroService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/v3/libros")
+@RequestMapping("/api/v3/libros")
 public class LibroController {
 
     private final LibroService libroService;
