@@ -2,7 +2,7 @@ package cl.biblioteca.bibliotecaejercicio.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+//import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
+//import org.springframework.web.reactive.function.client.WebClient;
 
-import cl.biblioteca.bibliotecaejercicio.dto.CineResponse;
+//import cl.biblioteca.bibliotecaejercicio.dto.CineResponse;
 import cl.biblioteca.bibliotecaejercicio.dto.CreateLibroRequest;
 import cl.biblioteca.bibliotecaejercicio.dto.UpdateLibroRequest;
-import cl.biblioteca.bibliotecaejercicio.dto.PokemonResponse;
+//import cl.biblioteca.bibliotecaejercicio.dto.PokemonResponse;
 import cl.biblioteca.bibliotecaejercicio.exception.ResourceNotFoundException;
 import cl.biblioteca.bibliotecaejercicio.mapper.LibroMapper;
 import cl.biblioteca.bibliotecaejercicio.model.Libro;
@@ -32,14 +32,14 @@ import jakarta.validation.Valid;
 public class LibroController {
 
     private final LibroService libroService;
-    private final WebClient pokeApiWebClient;
-    private final WebClient cineApiWebClient;
+    //private final WebClient pokeApiWebClient;
+    //private final WebClient cineApiWebClient;
 
-    public LibroController(LibroService libroService, 
-        @Qualifier("pokeApiWebClient")WebClient pokeApiWebClient, @Qualifier("cineApiWebClient") WebClient cineApiWebClient) {
+    public LibroController(LibroService libroService/* , 
+        @Qualifier("pokeApiWebClient")WebClient pokeApiWebClient, @Qualifier("cineApiWebClient") WebClient cineApiWebClient*/) {
             this.libroService = libroService;
-            this.pokeApiWebClient = pokeApiWebClient;
-            this.cineApiWebClient = cineApiWebClient;
+            //this.pokeApiWebClient = pokeApiWebClient;
+            //this.cineApiWebClient = cineApiWebClient;
     }
     
     @GetMapping
@@ -97,7 +97,7 @@ public class LibroController {
         return ResponseEntity.ok(total);
     }
 
-    /* --------------------------------------------------API DE POKEMON-------------------------------------------------- */
+    /* --------------------------------------------------API DE POKEMON-------------------------------------------------- 
 
     @GetMapping("/pokeapi")
         public ResponseEntity<PokemonResponse> consultarPokemon(
@@ -110,10 +110,10 @@ public class LibroController {
  
  
                 return ResponseEntity.ok(pokemon);
-        }
+        }*/
     
 
-    /* --------------------------------------------------API DE CINE-------------------------------------------------- */
+    /* --------------------------------------------------API DE CINE-------------------------------------------------- 
 
     @GetMapping("/cineapi")
         public ResponseEntity<CineResponse> consultarPelicula(
@@ -126,5 +126,5 @@ public class LibroController {
  
  
                 return ResponseEntity.ok(pelicula);
-        }
+        }*/
 }
